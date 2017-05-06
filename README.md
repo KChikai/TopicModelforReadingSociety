@@ -53,22 +53,28 @@
 ダウンロードしたデータからLDA，HDPモデルの作成を行う．
 データセットからgensimライブラリを用いてコーパスを作成するコードは以下の通り．
 
-    from gensim import corpora, models, similarities
-    corpus = corpora.BleiCorpus('./data/ap/ap.dat', './data/ap/vocab.txt')
+````python3
+from gensim import corpora
+corpus = corpora.BleiCorpus('./data/ap/ap.dat', './data/ap/vocab.txt')
+````
 
 コーパスからgensimを用いてLDAモデルを作成するコードは以下の通り(生成トピック数: 100個)．
 
-    model = models.ldamodel.LdaModel(corpus, num_topics=100, id2word=corpus.id2word)
+````python3
+model = models.ldamodel.LdaModel(corpus, num_topics=100, id2word=corpus.id2word)
+````
 
 生成されたモデルからある文書のトピックの構成を観測する．
 
-    topics = [model[c] for c in corpus]
-    print(topics[0])
-    
-    [(3, 0.023607255776894751),
-      (13, 0.11679936618551275),
-      (19, 0.075935855202707139),
-      (92, 0.10781541687001292)]
+````python3
+topics = [model[c] for c in corpus]
+print(topics[0])
+
+[(3, 0.023607255776894751),
+  (13, 0.11679936618551275),
+  (19, 0.075935855202707139),
+  (92, 0.10781541687001292)]
+````
 
 上記のコードでは文書のインデックスが0番目の文書のトピックの構成を確率値で出力している．
 `model[doc]`はdocが持つトピックを`(topic_index, topic_weight)`のリスト形式で返す．
@@ -81,12 +87,14 @@ HDPのモデル生成もLDAとほぼ同様に実装が可能である．
 単語群からワードクラウドを[wordcloudパッケージ][wordcloud]を用いて生成する．
 画像の生成は以下のコードで実現可能．
 
-        import matplotlib.pyplot as plt
-        from wordcoud import WordCloud        
-        wordcloud = WordCloud(background_color="black", font_path=fpath,
-                          width=900, height=500).generate_from_frequencies(text)
-        plt.imshow(wordcloud)
-        plt.show()
+````python3
+import matplotlib.pyplot as plt
+from wordcoud import WordCloud        
+wordcloud = WordCloud(background_color="black", font_path=fpath,
+                  width=900, height=500).generate_from_frequencies(text)
+plt.imshow(wordcloud)
+plt.show()
+````
 
 `WordCloud`クラスを呼び出す時にfontのpathの指定が必要である．
 また画像の表示に`matplotlib`が必要である．
