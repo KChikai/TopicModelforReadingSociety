@@ -60,7 +60,7 @@
 
 ***One of the topic in LDA model:***
 
-![lda alpha](https://github.com/OnizukaLab/TopicModelReadingSociety/blob/master/data/example_results/sample_lda_topic.png?raw=true)
+![lda alpha](https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/sample_lda_topic.png?raw=true)
 
 上図は実際に生成されたLDAモデルのトピックの一つを[wordcloud][wordcloud]に出力した例である．
 データセットが昔のニュース記事であるので，[1988年アメリカ合衆国大統領選挙][election]の候補者であった
@@ -71,7 +71,7 @@
 
 ***Alpha Parameter of LDA model:***
 
-![lda alpha](https://github.com/OnizukaLab/TopicModelReadingSociety/blob/master/data/example_results/lda_alpha.png?raw=true)
+![lda alpha](https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/lda_alpha.png?raw=true)
 
 AlphaはLDAモデル内のディリクレ分布のパラメータであり，数値を大きくすることでトピック数を増やすことができる．
 上図グラフでは，Alphaの数値を大きくすることでトピック数の偏りが平滑化されている．
@@ -79,7 +79,7 @@ AlphaはLDAモデル内のディリクレ分布のパラメータであり，数
 
 ***Number of topics between LDA model and HDP model:***
 
-![lda alpha](https://github.com/OnizukaLab/TopicModelReadingSociety/blob/master/data/example_results/lda_alpha.png?raw=true)
+![lda alpha](https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/lda_alpha.png?raw=true)
 
 同一コーパスでモデルを生成した時のLDAとHDPのトピック分布の違いを示す．
 LDAは手動で100トピックと設定，HDPはトピック数は自動決定であり150トピックとなった．
