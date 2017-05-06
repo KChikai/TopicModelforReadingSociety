@@ -99,7 +99,7 @@ HDPのモデル生成もLDAとほぼ同様に実装が可能である．
 
 ***One of the topic in LDA model:***
 
-<img src="https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/sample_lda_topic.png?raw=true" width="70%" height="70%" alt="lda_topic" style="display:block;margin:auto">
+![lda_topic](https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/sample_lda_topic.png?raw=true =80x80)
 
 上図は実際に生成されたLDAモデルのトピックの一つを[wordcloud][wordcloud]に出力した例である．
 データセットが昔のニュース記事であるので，[1988年アメリカ合衆国大統領選挙][election]の候補者であった
