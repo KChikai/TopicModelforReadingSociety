@@ -99,7 +99,10 @@ HDPのモデル生成もLDAとほぼ同様に実装が可能である．
 
 ***One of the topic in LDA model:***
 
-![lda_topic](https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/sample_lda_topic.png?raw=true =80x80)
+
+<p align="center">
+<img src="https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/sample_lda_topic.png?raw=true" width="70%" height="70%" alt="lda_topic">
+</p>
 
 上図は実際に生成されたLDAモデルのトピックの一つを[wordcloud][wordcloud]に出力した例である．
 データセットが昔のニュース記事であるので，[1988年アメリカ合衆国大統領選挙][election]の候補者であった
@@ -110,7 +113,9 @@ HDPのモデル生成もLDAとほぼ同様に実装が可能である．
 
 ***Alpha Parameter of LDA model:***
 
-<img src="https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/lda_alpha.png?raw=true" width="70%" height="70%" alt="lda_alpha" style="display:block;margin:auto">
+<p align="center">
+<img src="https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/lda_alpha.png?raw=true" width="70%" height="70%" alt="lda_alpha">
+</p>
 
 AlphaはLDAモデル内のディリクレ分布のパラメータであり，数値を大きくすることでトピック数を増やすことができる．
 上図グラフでは，Alphaの数値を大きくすることでトピック数の偏りが平滑化されている．
@@ -119,7 +124,9 @@ Alphaのgensimデフォルト値は`1.0 / len(corpus)`．
 
 ***Number of topics between LDA model and HDP model:***
 
-<img src="https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/lda_hdp.png?raw=true" width="70%" height="70%" alt="lda_hdp" style="display:block;margin:auto">
+<p align="center">
+<img src="https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/lda_hdp.png?raw=true" width="70%" height="70%" alt="lda_hdp">
+</p>
 
 同一コーパスでモデルを生成した時のLDAとHDPのトピック分布の違いを示す．
 LDAは手動で100トピックと設定，HDPはトピック数は自動決定であり150トピックとなった．
