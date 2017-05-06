@@ -1,16 +1,17 @@
-# Topic Model for the lecture in Onizuka Lab. NLP Team  
+# Topic Model for the lecture in Onizuka Lab. NLP Team 2017 
 
-このレポジトリに輪講で紹介したトピックモデルについてのサンプルプログラムを置いておきます．
-
+このレポジトリに輪講で紹介したトピックモデルについてのサンプルプログラムを設置( ☝՞ਊ ՞)☝．
+参考図書はレジュメの最後にも記載しているが，2016年の輪講本である[実践 機械学習システム][book1]（研究室の本棚にある）．
 
 ## Requirements
 
 ### Data Set
 
 今回使用するデータセットとして，Associated Press (AP) データセット
-（トピックモデル研究の初期から使われている、ニュースレポートのデータセット）
-を使用する．データのダウンロードは`./data`ディレクトリ内で以下のコマンドを実行．
+（トピックモデル研究の初期から使われている，ニュースレポートのデータセット）
+を使用する．データのダウンロードは`./data`ディレクトリ内で以下のシェルスクリプトを実行．
 
+    $ cd data
     $ ./download_ap.sh
     
 解凍されたディレクトリ内に`ap.dat`, `ap.txt`, `vocab.txt`の三つのファイルができる．
@@ -50,7 +51,45 @@
 ## Create LDA or HDP Model
 
 ダウンロードしたデータからLDA，HDPモデルの作成を行う．
-追記予定．
+データセットからgensimライブラリを用いてコーパスを作成するコードは以下の通り．
+
+    from gensim import corpora, models, similarities
+    corpus = corpora.BleiCorpus('./data/ap/ap.dat', './data/ap/vocab.txt')
+
+コーパスからgensimを用いてLDAモデルを作成するコードは以下の通り(生成トピック数: 100個)．
+
+    model = models.ldamodel.LdaModel(corpus, num_topics=100, id2word=corpus.id2word)
+
+生成されたモデルからある文書のトピックの構成を観測する．
+
+    topics = [model[c] for c in corpus]
+    print(topics[0])
+    
+    [(3, 0.023607255776894751),
+      (13, 0.11679936618551275),
+      (19, 0.075935855202707139),
+      (92, 0.10781541687001292)]
+
+上記のコードでは文書のインデックスが0番目の文書のトピックの構成を確率値で出力している．
+`model[doc]`はdocが持つトピックを`(topic_index, topic_weight)`のリスト形式で返す．
+HDPのモデル生成もLDAとほぼ同様に実装が可能である．
+所々関数の使用が異なるので注意（詳しくは[ドキュメント][gensim]を参照）．
+
+
+## Create Word Cloud 
+
+単語群からワードクラウドを[wordcloudパッケージ][wordcloud]を用いて生成する．
+画像の生成は以下のコードで実現可能．
+
+        import matplotlib.pyplot as plt
+        from wordcoud import WordCloud        
+        wordcloud = WordCloud(background_color="black", font_path=fpath,
+                          width=900, height=500).generate_from_frequencies(text)
+        plt.imshow(wordcloud)
+        plt.show()
+
+`WordCloud`クラスを呼び出す時にfontのpathの指定が必要である．
+また画像の表示に`matplotlib`が必要である．
 
 
 ## Result 
@@ -60,7 +99,7 @@
 
 ***One of the topic in LDA model:***
 
-![lda alpha](https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/sample_lda_topic.png?raw=true)
+<img src="https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/sample_lda_topic.png?raw=true" width="80%" height="80%" alt="lda_topic">
 
 上図は実際に生成されたLDAモデルのトピックの一つを[wordcloud][wordcloud]に出力した例である．
 データセットが昔のニュース記事であるので，[1988年アメリカ合衆国大統領選挙][election]の候補者であった
@@ -75,11 +114,12 @@
 
 AlphaはLDAモデル内のディリクレ分布のパラメータであり，数値を大きくすることでトピック数を増やすことができる．
 上図グラフでは，Alphaの数値を大きくすることでトピック数の偏りが平滑化されている．
+Alphaのgensimデフォルト値は`1.0 / len(corpus)`．
 
 
 ***Number of topics between LDA model and HDP model:***
 
-![lda alpha](https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/lda_alpha.png?raw=true)
+![lda hdp](https://github.com/KChikai/TopicModelforReadingSociety/blob/master/data/example_results/lda_hdp.png?raw=true)
 
 同一コーパスでモデルを生成した時のLDAとHDPのトピック分布の違いを示す．
 LDAは手動で100トピックと設定，HDPはトピック数は自動決定であり150トピックとなった．
