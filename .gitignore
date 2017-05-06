@@ -1,10 +1,11 @@
 .idea
 
 data/*
-!/data/.gitkeep
+!data/download_ap.sh
+!data/example_results/
 
 figure/*
-!/figure/*.py
+!figure/*.py
 !figure/sim_docs/.gitkeep
 
 word_cloud/*
