@@ -53,20 +53,20 @@
 ダウンロードしたデータからLDA，HDPモデルの作成を行う．
 データセットからgensimライブラリを用いてコーパスを作成するコードは以下の通り．
 
-````python3
+````python
 from gensim import corpora
 corpus = corpora.BleiCorpus('./data/ap/ap.dat', './data/ap/vocab.txt')
 ````
 
 コーパスからgensimを用いてLDAモデルを作成するコードは以下の通り(生成トピック数: 100個)．
 
-````python3
+````python
 model = models.ldamodel.LdaModel(corpus, num_topics=100, id2word=corpus.id2word)
 ````
 
 生成されたモデルからある文書のトピックの構成を観測する．
 
-````python3
+````python
 topics = [model[c] for c in corpus]
 print(topics[0])
 
@@ -87,7 +87,7 @@ HDPのモデル生成もLDAとほぼ同様に実装が可能である．
 単語群からワードクラウドを[wordcloudパッケージ][wordcloud]を用いて生成する．
 画像の生成は以下のコードで実現可能．
 
-````python3
+````python
 import matplotlib.pyplot as plt
 from wordcoud import WordCloud        
 wordcloud = WordCloud(background_color="black", font_path=fpath,
