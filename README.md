@@ -41,10 +41,12 @@
 - `word_cloud/hdp_model.py`
   - HDPモデルの構築，モデルが生成するトピックのワードクラウド結果を可視化．
 
-- `figure/lda_figure.py`
+- `figure/figure.py`
+  - 雑多（上記二つと被っている部分有）
   - 生成したモデルの類似文書を計算
   - 類似トピックのワードクラウド化
   - トピック分布の出力
+  - perplexityの計算
 
 
 
