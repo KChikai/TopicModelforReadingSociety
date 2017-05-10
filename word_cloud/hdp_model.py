@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from gensim import corpora, models
@@ -10,6 +11,12 @@ VOCABULARY = '../data/ap/vocab.txt'
 
 
 def create_wordcloud(text, filename):
+    """
+    This function creates a wordcloud image from an list of tuple data.
+    :param text: list of tuple (word, frequency)
+    :param filename: filename to save as an image file
+    :return:
+    """
     # choose the font suitable for your environment
     fpath = "/Library/Fonts/ヒラギノ丸ゴ ProN W4.ttc"
 
@@ -20,18 +27,21 @@ def create_wordcloud(text, filename):
 
 
 def main():
+
+    # create corpus from AP data
     corpus = corpora.BleiCorpus(DOCUMENTS, VOCABULARY)
 
-    # create HDP model
-    #hdp = models.HdpModel(corpus, id2word=corpus.id2word)
-    #hdp.save('ap.hdp')
-
-    # load HDP model
-    hdp = models.HdpModel.load('ap.hdp')
+    # define HDP model
+    if os.path.exists('ap.hdp'):
+        # load HDP model
+        hdp = models.HdpModel.load('ap.hdp')
+    else:
+        # create HDP model
+        hdp = models.HdpModel(corpus, id2word=corpus.id2word)
+        hdp.save('ap.hdp')
 
     # create Wordcloud from a topic
-    topics = [hdp[c] for c in corpus]
-    word_list = hdp.show_topics(topics=-1, topn=40, formatted=False)
+    word_list = hdp.show_topics(topics=-1, topn=40, formatted=False)        # collect all data of topics
     for topic_num in range(len(word_list)):
         tuple_list = word_list[topic_num][1]
         create_wordcloud(tuple_list, "hdp_topics/topic" + str(topic_num) + ".png")

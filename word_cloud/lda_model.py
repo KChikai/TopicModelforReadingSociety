@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial import distance
@@ -12,6 +13,12 @@ VOCABULARY = '../data/ap/vocab.txt'
 
 
 def closest_to(doc_id, topics):
+    """
+    You can get the most similar document's ID for the document which has 'doc_id'.
+    :param doc_id: document ID that you want to search
+    :param topics: list of lists which has tuples (topic_id, probability)
+    :return: document ID representing the most similar document for the 'doc_id' document
+    """
     dense = np.zeros((len(topics), 100), float)
     for ti, t in enumerate(topics):
         for tj, v in t:
@@ -24,6 +31,12 @@ def closest_to(doc_id, topics):
 
 
 def create_wordcloud(text, filename):
+    """
+    This function creates a wordcloud image from an list of tuple data.
+    :param text: list of tuple (word, frequency)
+    :param filename: filename to save as an image file
+    :return:
+    """
     # choose the font suitable for your environment
     fpath = "/Library/Fonts/ヒラギノ丸ゴ ProN W4.ttc"
 
@@ -34,27 +47,31 @@ def create_wordcloud(text, filename):
 
 
 def main():
+    # create corpus from AP data
     corpus = corpora.BleiCorpus(DOCUMENTS, VOCABULARY)
 
-    # create LDA model
-    #lda = models.LdaModel(corpus, num_topics=100, id2word=corpus.id2word)
-    #lda.save('ap.lda')
-
-    # load LDA model
-    lda = models.LdaModel.load('ap.lda')
-    topics = [lda[c] for c in corpus]
+    # define LDA model
+    if os.path.exists('ap.lda'):
+        # load LDA model
+        lda = models.LdaModel.load('ap.lda')
+    else:
+        # create LDA model
+        # you can change the number of topics and other parameters
+        lda = models.LdaModel(corpus, num_topics=100, id2word=corpus.id2word)
+        lda.save('ap.lda')
 
     # create Wordcloud from two sentences
+    # doc _id: one of the document ID pair which you want to see as wordcloud
     doc_id = 50
     sentence0 = sentence1 = []
+    topics = [lda[c] for c in corpus]
     closest_id = closest_to(doc_id, topics)
-    print(closest_id)
+    print("The most similar document's ID: ", closest_id)
     for index, c in enumerate(corpus):
         if index == doc_id:
             sentence0 = [(lda.id2word[tup[0]], tup[1]) for tup in c]
         if index == closest_id:
             sentence1 = [(lda.id2word[tup[0]], tup[1]) for tup in c]
-
     create_wordcloud(sentence0, 'sim_docs/' + str(0) + ".png")
     create_wordcloud(sentence1, 'sim_docs/' + str(1) + ".png")
 
